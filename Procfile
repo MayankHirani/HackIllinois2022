@@ -1,1 +1,1 @@
-web:heroku_test
+web: npm_start
