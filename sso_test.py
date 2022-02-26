@@ -1,2 +1,0 @@
-# Illinois SSO login
-
