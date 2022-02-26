@@ -39,5 +39,4 @@ There is also meal selection feature that allows users to search for meals to ma
 ### Which does the tech stack look like and why did you choose these over alternatives?  
 Flask - Python familiarity  
 Vue/Vuetify - Relatively easy to pick up on  
-Heroku - Familiarity  
-Heroku Postgre - Free, works with heroku for deployment
+Heroku - Familiarity
