@@ -1,19 +1,25 @@
-from flask import Flask, jsonify
-from flask_restful import Resource, Api
+import os
+from flask import Flask, request
 from flask_cors import CORS
+import json
 from lib.meetup_cache import MeetupCache
 
-app = Flask(__name__)
-api = Api(app)
+app = Flask(__name__, static_folder='./build', static_url_path='/')
 CORS(app)
 
 meetups = MeetupCache()
 
-class Default(Resource):
-    def get(self):
-        return {"status": "ok"}
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
-api.add_resource(Default, '/')
+@app.route('/favicon.ico')
+def favicon():
+    return app.send_static_file('favicon.ico')
 
-if __name__ == '__main__':
-    app.run()
+@app.errorhandler(404)
+def not_found(e):
+    return app.send_static_file('index.html')
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
