@@ -14,3 +14,6 @@ class RestaurantDatabase():
             location = Location(restaurant_obj["address"]["formatted"], restaurant_obj["geo"]["lat"], restaurant_obj["geo"]["lon"])
             restaurant = Restaurant(str(restaurant_obj["restaurant_id"]), restaurant_obj["restaurant_name"], location)
             self.restaurants.append(restaurant)
+
+    def get_restaurant(self, id):
+        return next(filter(lambda x: x.id == id, self.restaurants), None)
