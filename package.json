@@ -6,11 +6,8 @@
     },
     "dependencies": {
     },
+    "main": "heroku_test.js",
     "scripts": {
-        "dev": "heroku_test",
-        "build": "heroku_test build",
-        "start": "heroku_test start",
-        "generate": "heroku_test generate",
-        "heroku-postbuild": "npm run build"
+        "start": "node heroku_test.js"
     }
   }
