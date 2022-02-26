@@ -9,21 +9,7 @@ Borrowed from CS 196 :)
 An app that lets people meet up for food. 
 
 ### What features make up your MVP?  
-- Fridge Tracker
-    - Enter items in fridge, keep track of when they were entered
-    - Update items upon shopping trip, etc.
-- Meal Selection
-    - Search for meals based on criteria
-        - Course (breakfast, lunch, dinner, snack, dessert)
-        - Flavor profile
-        - Cold/hot
-        - Ingredient Preferences
-        - Meal prep time/difficulty
-    - Rank based on custom ranking
-- Make the selected meal
-    - Choose portions to make
-    - Provide user with ingredient list, recipe instructions
-    - Update Fridge after meal is made
+
 
 ### What are the features discussed, but not in the MVP?  
 - Meal Selection
