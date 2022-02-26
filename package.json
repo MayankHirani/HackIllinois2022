@@ -5,5 +5,8 @@
       "node": "14.x"
     },
     "dependencies": {
+    },
+    "scripts": {
+        "start": "heroku_test.html"
     }
   }
