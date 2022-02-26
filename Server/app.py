@@ -1,22 +1,19 @@
-import os
-import numpy as np
-from flask import Flask, request
+from flask import Flask, jsonify
+from flask_restful import Resource, Api
 from flask_cors import CORS
+from lib.meetup_cache import MeetupCache
 
-app = Flask(__name__, static_folder='./build', static_url_path='/')
+app = Flask(__name__)
+api = Api(app)
 CORS(app)
 
-@app.route('/')
-def index():
-    return app.send_static_file('index.html')
+meetups = MeetupCache()
 
-@app.route('/favicon.ico')
-def favicon():
-    return app.send_static_file('favicon.ico')
+class Default(Resource):
+    def get(self):
+        return {"status": "ok"}
 
-@app.errorhandler(404)
-def not_found(e):
-    return app.send_static_file('index.html')
+api.add_resource(Default, '/')
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
+if __name__ == '__main__':
+    app.run()
