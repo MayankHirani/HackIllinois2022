@@ -1,13 +1,30 @@
 from .meetup import Meetup
 from math import radians, cos, sin, asin, sqrt, pi
-from datetime import date
+import datetime
 
 class MeetupCache:
     def __init__(self) -> None:
         self.meetups = []
-    
-    # TODO: function to get participating meetups by user id -> array of meetup ids
-    # TODO: function to get non-participating meetups by user id, distance, conflicts -> approriate array of meetup ids
+
+    def sort_meetups(self, user_location):
+        distances = []
+        for event in self.meetups:
+            event_latitude = event.restaurant.adress.location.latitude
+            event_longitude = event.restaurant.adress.location.longitude
+            distance = self.get_distance(user_location.latitude, event_latitude, user_location.longitude, event_longitude)
+            distances.append(distance)
+
+        for i in range(1, len(distances)):
+            x = distances[i]
+            y = self.meetups[i]
+            j = i - 1
+            while j >= 0 and x < distances[j]:
+                distances[j+1] = distances[j]
+                j -= 1
+            distances[j+1] = x
+            self.meetups[j + 1] = y
+
+            
 
     def get_meetup(self, id):
         return next(filter(lambda x: x.id == id, self.meetups), None)
