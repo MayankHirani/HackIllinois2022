@@ -47,7 +47,7 @@ class MeetupCache:
         return(c * 3956)
 
     def create_meetup(self, restaurant, time, creator, size):
-        start = date.strptime(time, '%Y-%m-%d %H:%M:%S.%f')
+        start = datetime.strptime(time, '%I:%M%p')
         self.meetups.append(Meetup(creator, start, size, restaurant))
 
 
