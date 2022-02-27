@@ -1,4 +1,5 @@
 from .meetup import Meetup
+import math
 
 class MeetupCache:
     def __init__(self) -> None:
@@ -10,21 +11,41 @@ class MeetupCache:
     def get_meetup(self, id):
         return next(filter(lambda x: x.id == id, self.meetups), None)
 
-    def get_user_meetups(self, attendee):
-        meetup_ids = []
+    def get_user_meetups(self, id):
+        events = []
         for event in self.meetups:
-            if attendee in event.attendees:
-                meetup_ids.append(event)
-        return meetup_ids
+            if id in event.attendees:
+                events.append(event)
+        return events
 
-    # assumes attendee has a latitude and longitude
-    def get_available_meetups(self, attendee):
+    def get_available_meetups(self, id, user_location, max_distance):
         available_meetups = []
-        current_meetups = get_attendee_meetups(self, attendee)
+        current_meetups = get_user_meetups(self, id)
         current_times = []
         for event in current_meetups:
             current_times.append(event.start)
-        distance = event
         for event in self.meetups:
-            if event not in current_meetups and event.time not in current_times:
+            event_latitude = event.restaurant.adress.location.latitude
+            event_longitude = event.restaurant.adress.location.longitude
+            distance = get_distance(user_location.latitude, event_latitude, user_location.longitude, event_longitude)
+            if event not in current_meetups and event.time not in current_times and distance <= max_distance:
+                available_meetups.append(event)
+
+    #for get_available_meetups
+    def distance(lat1, lat2, lon1, lon2):
+     
+        lon1 *= pi/180
+        lon2 *= pi/180
+        lat1 *= pi/180
+        lat2 *= pi/180
+
+        dlon = lon2 - lon1
+        dlat = lat2 - lat1
+        a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+        c = 2 * asin(sqrt(a))
+        return(c * 3956)
+
+
+
+
                 
