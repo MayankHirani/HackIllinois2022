@@ -3,8 +3,8 @@ from math import radians, cos, sin, asin, sqrt, pi
 # latitude (float), longitude (float)
 class Location:
     def __init__(self, lat, lon) -> None:
-        self.latitude = lat
-        self.longitude = lon
+        self.latitude = float(lat)
+        self.longitude = float(lon)
 
     def json(self):
         return { "latitude" : self.latitude, "longitude" : self.longitude }

@@ -6,7 +6,7 @@ class Restaurant:
     def __init__(self, id, name, address) -> None:
         self.id = str(id)
         self.name = str(name)
-        self.address = str(address)
+        self.address = address
     
     def json(self):
         return { "id" : self.id, "name" : self.name, "address" : self.address.json() }
