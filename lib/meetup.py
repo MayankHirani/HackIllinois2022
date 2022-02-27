@@ -15,7 +15,7 @@ class Meetup:
         self.attendees.append(creator)
 
     def add_attendee(self, id):
-        if id not in self.attendees:
+        if id not in self.attendees and len(self.attendees) < self.size:
             self.attendees.append(id)
     
     def remove_attendee(self, id, cache):

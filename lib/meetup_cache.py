@@ -1,5 +1,6 @@
 from .meetup import Meetup
 from math import radians, cos, sin, asin, sqrt, pi
+from datetime import date
 
 class MeetupCache:
     def __init__(self) -> None:
@@ -44,6 +45,10 @@ class MeetupCache:
         a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
         c = 2 * asin(sqrt(a))
         return(c * 3956)
+
+    def create_meetup(self, restaurant, time, creator, size):
+        start = datetime.strptime(time, '%I:%M%p')
+        self.meetups.append(Meetup(creator, start, size, restaurant))
 
 
 
