@@ -1,5 +1,4 @@
 import os
-from turtle import distance
 from flask import Flask, request
 from flask_cors import CORS
 import json
