@@ -11,8 +11,8 @@
     <v-main>
       <GoogleLogin @setUser="setUser" v-if="view == 'login'"></GoogleLogin>
       <LoadingScreen v-if="view == 'loading'"></LoadingScreen>
-      <CantAccess v-if="view == 'cant'"></CantAccess>
-      <MeetUps v-if="view == 'meet'"></MeetUps>
+      <CantAccess @setUser="setUser" v-if="view == 'cant'"></CantAccess>
+      <MeetUps :mymeetups="mymeetups" :meetups="meetups" v-if="view == 'meet'"></MeetUps>
       <Settings v-if="view == 'settings'"></Settings>
       <CreateMeetup v-if="view == 'create'"></CreateMeetup>
     </v-main>
@@ -24,8 +24,9 @@ import GoogleLogin from './components/GoogleLogin';
 import LoadingScreen from './components/LoadingScreen';
 import CantAccess from './components/CantAccess';
 import MeetUps from './components/MeetUps';
-import Settings from './components/Settings';
+import SettingsPage from './components/SettingsPage';
 import CreateMeetup from './components/CreateMeetup';
+import axios from 'axios';
 
 export default {
   name: 'App',
@@ -35,20 +36,58 @@ export default {
     LoadingScreen,
     CantAccess,
     MeetUps,
-    Settings,
+    SettingsPage,
     CreateMeetup
   },
   data: () => ({
     view: "login",
-    user: null
+    user: null,
+    mymeetups: [],
+    meetups: [],
+    distance: 15
   }),
   methods: {
     setUser(googleUser) {
       this.user = googleUser
+      if (this.user == null) {
+        this.view = "login"
+        return
+      }
+      if (this.user.getBasicProfile().getEmail().split("@")[1] != "illinois.edu") {
+        this.view = "cant"
+        return
+      }
       this.view = "loading"
+      this.loadMyMeetups()
     },
-    loadMeetups() {
-      // LOAD MEETUP DATA AXIOS
+    loadMyMeetups() {
+      axios.get('http://localhost:8080/getmymeetups', { params: { "id" : this.user.getBasicProfile().getId() }})
+      .then(response => {
+        this.mymeetups = response
+        this.getLocation()
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
+    getLocation() {
+      this.$getLocation({
+        enableHighAccuracy: true,
+        maximumAge: 300000
+      })
+      .then(coordinates => {
+        this.loadMeetups(coordinates.latitude, coordinates.longitude)
+      })
+    },
+    loadMeetups(lat, lon) {
+      axios.get('http://localhost:8080/getmeetups', { params: { "id" : this.user.getBasicProfile().getId(), "lat" : lat, "lon" : lon, "distance" : this.distance }})
+      .then(response => {
+        this.meetups = response
+        this.view = "meet"
+      })
+      .catch(error => {
+        console.log(error)
+      })
     }
   }
 };
