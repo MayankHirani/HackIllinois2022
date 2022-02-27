@@ -19,3 +19,6 @@ class RestaurantDatabase():
 
     def get_restaurant(self, id):
         return next(filter(lambda x: x.id == id, self.restaurants), None)
+
+    def get_restaurants_available(self, user_location, distance):
+        pass
