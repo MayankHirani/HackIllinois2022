@@ -9,14 +9,15 @@
     </v-app-bar>
 
     <v-main>
+      <GoogleLogin @setUser="setUser" v-if="view == 'login'"></GoogleLogin>
       <LoadingScreen v-if="view == 'loading'"></LoadingScreen>
-      <HelloWorld v-if="view == 'hello'"></HelloWorld>
-      <MeetUps v-if="view == 'meet'"></MeetUps>
+      <MeetUps v-if="view == 'list'"></MeetUps>
     </v-main>
   </v-app>
 </template>
 
 <script>
+import GoogleLogin from './components/GoogleLogin';
 import LoadingScreen from './components/LoadingScreen';
 import MeetUps from './components/MeetUps';
 
@@ -24,12 +25,19 @@ export default {
   name: 'App',
 
   components: {
+    GoogleLogin,
     LoadingScreen,
     MeetUps
   },
-
   data: () => ({
-    view: "meet"
-  })
+    view: "login",
+    user: null
+  }),
+  methods: {
+    setUser(googleUser) {
+      this.user = googleUser
+      this.view = "loading"
+    }
+  }
 };
 </script>
