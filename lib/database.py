@@ -21,4 +21,10 @@ class RestaurantDatabase():
         return next(filter(lambda x: x.id == id, self.restaurants), None)
 
     def get_restaurants_available(self, user_location, distance):
-        pass
+        available_restaurants = []
+        for restaurant in self.restaurants:
+            restaurant_latitude = restaurant.address.location.latitude
+            restaurant_longitude = restaurant.address.location.longitude
+            restaurant_distance = Location.get_distance(user_location.latitude, restaurant_latitude, user_location.longitude, restaurant_longitude)
+            if restaurant_distance <= distance:
+                available_restaurants.append(restaurant)

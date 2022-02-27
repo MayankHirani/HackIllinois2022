@@ -9,8 +9,8 @@ class MeetupCache:
     def sort_meetups(self, user_location):
         distances = []
         for event in self.meetups:
-            event_latitude = event.restaurant.adress.location.latitude
-            event_longitude = event.restaurant.adress.location.longitude
+            event_latitude = event.restaurant.address.location.latitude
+            event_longitude = event.restaurant.address.location.longitude
             distance = get_distance(user_location.latitude, event_latitude, user_location.longitude, event_longitude)
             distances.append(distance)
 
@@ -43,14 +43,14 @@ class MeetupCache:
         for event in current_meetups:
             current_times.append(event.start)
         for event in self.meetups:
-            event_latitude = event.restaurant.adress.location.latitude
-            event_longitude = event.restaurant.adress.location.longitude
+            event_latitude = event.restaurant.address.location.latitude
+            event_longitude = event.restaurant.address.location.longitude
             distance = get_distance(user_location.latitude, event_latitude, user_location.longitude, event_longitude)
             if event not in current_meetups and event.time not in current_times and distance <= max_distance:
                 available_meetups.append(event)
+        return available_meetups
 
     def create_meetup(self, restaurant, time, creator, size):
-        datetime
         start = datetime.strptime(time, '%H:%M')
         self.meetups.append(Meetup(creator, start, size, restaurant))
 
