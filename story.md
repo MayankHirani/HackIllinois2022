@@ -4,7 +4,7 @@ When we first arrived at the University, and didn't know anyone, the best way to
 
 ## What it does
 
-After logging in, a user is first greeted by a list of meet-ups going on near them. For each meet-up, the restaurant or bakery is displayed, as well as the time, and the number of attendees. All attendee information is kept anonymous. When logging in, the user must login with their Illinois email, establishing security for our users. Users also have the option to create a meet-up and after choosing a restaurant and time, their meet-up will show up for others nearby. 
+After logging in, a user is first greeted by a list of meet-ups going on near them. For each meet-up, the restaurant or bakery is displayed, as well as the time, and the number of attendees. All attendee information is kept anonymous. When logging in, the user must login with their Illinois email, establishing security for our users. Users also have the option to create a meet-up and after choosing a restaurant and time, their meet-up will show up for others nearby. When using the app, one will have the option in settings to set their location preferences for their meet-ups homepage. 
 
 ## How we built it
 
@@ -30,7 +30,9 @@ After our continous efforts, we are delighted to have a finished working product
 
 Each of us deepened our understanding of software engineering. We learned the different parts of full stack development. In the frontend, we learned how to use Vue and Javascript to create the layout of an app. We also learned how to integrate the backend algorithms into the frontend part of the app.
 
-*add more*
+We gained experience with app development through flask/Python and Vue. Additionally, we learned how to use different APIs. 
+
+As a team, we practiced working with version control systems and using professional software conventions. It was a very fun and helpful experience for all of us to go through the entire process of coming up with an idea, developing it, and finishing it to the end. 
 
 ## What's next for Food Buddies
 
