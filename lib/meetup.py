@@ -13,3 +13,16 @@ class Meetup:
         self.restaurant = restaurant
         self.attendees = []
         self.attendees.append(creator)
+
+    def add_attendee(self, id):
+        if id not in self.attendees:
+            self.attendees.append(id)
+    
+    def remove_attendee(self, id, cache):
+        if id in self.attendees:
+            self.attendees.remove(id)
+            if len(self.attendees) == 0:
+                cache.meetups.remove(self)
+            return True
+        else:
+            return False
