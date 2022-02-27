@@ -29,7 +29,7 @@ def getmymeetups():
     my_meetups = []
     for meetup in meetups.get_user_meetups(user_id):
         my_meetups.append(meetup.json())
-    return json.dumps(my_meetups)
+    return { "meetups" : json.dumps(my_meetups) }
 
 @app.route('/getmeetups', methods=['GET'])
 def getmeetups():
@@ -40,7 +40,7 @@ def getmeetups():
     my_meetups = []
     for meetup in meetups.get_available_meetups(user_id, Location(latitude, longitude), distance):
         my_meetups.append(meetup.json())
-    return json.dumps(my_meetups)
+    return { "meetups" : json.dumps(my_meetups) }
 
 @app.route('/getrestaurants', methods=['GET'])
 def getrestaurants():
@@ -50,7 +50,7 @@ def getrestaurants():
     my_restaurants = []
     for restaurant in db.get_restaurants_available(Location(latitude, longitude), distance):
         my_restaurants.append(restaurant.json())
-    return json.dumps(my_restaurants)
+    return { "restaurants" : json.dumps(my_restaurants) }
 
 @app.route('/createmeetup', methods=['POST'])
 def createmeetup():

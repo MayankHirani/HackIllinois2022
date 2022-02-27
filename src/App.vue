@@ -64,7 +64,7 @@ export default {
     loadMyMeetups() {
       axios.get('http://localhost:8080/getmymeetups', { params: { "id" : this.user.getBasicProfile().getId() }})
       .then(response => {
-        this.mymeetups = response
+        this.meetups = JSON.parse(response.data.meetups)
         console.log(response)
         this.getLocation()
       })
@@ -84,7 +84,7 @@ export default {
     loadMeetups(lat, lon) {
       axios.get('http://localhost:8080/getmeetups', { params: { "id" : this.user.getBasicProfile().getId(), "lat" : lat, "lon" : lon, "distance" : this.distance }})
       .then(response => {
-        this.meetups = response
+        this.meetups = JSON.parse(response.data.meetups)
         console.log(response)
         this.view = "meet"
       })
