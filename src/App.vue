@@ -65,7 +65,7 @@ export default {
       this.loadMyMeetups()
     },
     loadMyMeetups() {
-      axios.get('http://localhost:8080/getmymeetups', { params: { "id" : this.user.getBasicProfile().getId() }})
+      axios.get('https://foodbuddies2022.herokuapp.com/getmymeetups', { params: { "id" : this.user.getBasicProfile().getId() }})
       .then(response => {
         this.mymeetups = JSON.parse(response.data.meetups)
         console.log(this.meetups)
@@ -87,7 +87,7 @@ export default {
       })
     },
     loadMeetups(lat, lon) {
-      axios.get('http://localhost:8080/getmeetups', { params: { "id" : this.user.getBasicProfile().getId(), "lat" : lat, "lon" : lon, "distance" : this.distance }})
+      axios.get('https://foodbuddies2022.herokuapp.com/getmeetups', { params: { "id" : this.user.getBasicProfile().getId(), "lat" : lat, "lon" : lon, "distance" : this.distance }})
       .then(response => {
         this.meetups = JSON.parse(response.data.meetups)
         console.log(response)
@@ -99,7 +99,7 @@ export default {
     },
     joinMeetup(mid, emoji) {
       this.view = "loading"
-      axios.get('http://localhost:8080/joinmeetup', { "params" : { "id" : this.user.getBasicProfile().getId(), "emoji" : emoji, "mid" : mid}})
+      axios.get('https://foodbuddies2022.herokuapp.com/joinmeetup', { "params" : { "id" : this.user.getBasicProfile().getId(), "emoji" : emoji, "mid" : mid}})
       .then(response => {
         this.setUser(this.user)
         console.log(response)
@@ -110,7 +110,7 @@ export default {
     },
     leaveMeetup(mid) {
       this.view = "loading"
-      axios.get('http://localhost:8080/leavemeetup', { "params" : { "id" : this.user.getBasicProfile().getId(), "mid" : mid } })
+      axios.get('https://foodbuddies2022.herokuapp.com/leavemeetup', { "params" : { "id" : this.user.getBasicProfile().getId(), "mid" : mid } })
       .then(response => {
         this.setUser(this.user)
         console.log(response)
@@ -129,7 +129,7 @@ export default {
       console.log(emoji)
       console.log(size)
       console.log(this.user.getBasicProfile().getId())
-      axios.get('http://localhost:8080/createmeetup', { "params" : { "rid" : rid.toString(), "time" : time, "id" : this.user.getBasicProfile().getId(), "emoji" : emoji, "size" : size } })
+      axios.get('https://foodbuddies2022.herokuapp.com/createmeetup', { "params" : { "rid" : rid.toString(), "time" : time, "id" : this.user.getBasicProfile().getId(), "emoji" : emoji, "size" : size } })
       .then(response => {
         this.setUser(this.user)
         console.log(response)
@@ -145,7 +145,7 @@ export default {
         maximumAge: 300000
       })
       .then(coordinates => {
-        axios.get('http://localhost:8080/getrestaurants', { params: { "id" : this.user.getBasicProfile().getId(), "lat" : coordinates.lat, "lon" : coordinates.lng, "distance" : this.distance }})
+        axios.get('https://foodbuddies2022.herokuapp.com/getrestaurants', { params: { "id" : this.user.getBasicProfile().getId(), "lat" : coordinates.lat, "lon" : coordinates.lng, "distance" : this.distance }})
         .then(response => {
           this.restaurants = JSON.parse(response.data.restaurants)
           this.view = "create"
