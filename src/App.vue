@@ -11,6 +11,7 @@
     <v-main>
       <LoadingScreen v-if="view == 'loading'"></LoadingScreen>
       <HelloWorld v-if="view == 'hello'"></HelloWorld>
+      <MeetUps v-if="view == 'meet'"></MeetUps>
     </v-main>
   </v-app>
 </template>
@@ -18,6 +19,7 @@
 <script>
 import LoadingScreen from './components/LoadingScreen';
 import HelloWorld from './components/HelloWorld';
+import MeetUps from './components/MeetUps';
 
 export default {
   name: 'App',
@@ -25,10 +27,11 @@ export default {
   components: {
     LoadingScreen,
     HelloWorld,
+    MeetUps
   },
 
   data: () => ({
-    view: "loading"
+    view: "meet"
   })
 };
 </script>
