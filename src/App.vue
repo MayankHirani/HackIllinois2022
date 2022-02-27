@@ -13,7 +13,7 @@
       <LoadingScreen v-if="view == 'loading'"></LoadingScreen>
       <CantAccess @setUser="setUser" v-if="view == 'cant'"></CantAccess>
       <MeetUps :mymeetups="mymeetups" :meetups="meetups" v-if="view == 'meet'"></MeetUps>
-      <SettingsPage v-if="view == 'settings'"></SettingsPage>
+      <SettingsPage @updateDistance="updateDistance" @setUser="setUser" :user="user" :distance="distance" v-if="view == 'settings'"></SettingsPage>
       <CreateMeetup v-if="view == 'create'"></CreateMeetup>
     </v-main>
   </v-app>
@@ -48,6 +48,7 @@ export default {
   }),
   methods: {
     setUser(googleUser) {
+      console.log(this.distance)
       this.user = googleUser
       if (this.user == null) {
         this.view = "login"
@@ -88,7 +89,10 @@ export default {
       .catch(error => {
         console.log(error)
       })
-    }
+    },
+    updateDistance(dist) {
+      this.distance = dist
+    },
   }
 };
 </script>

@@ -88,7 +88,7 @@
     <h1>Other Meetups</h1>
     <v-container>
       <ul style="list-style: none;">
-        <li v-for="item in meetups" :item="item" :key="item">
+        <li v-for="item in meetups" :item="item" :key="item.id">
             <v-row dense>
                 <v-col cols="12">
                 <v-card
@@ -164,6 +164,6 @@
     name: 'MeetUps',
     data: () => ({
     }),
-  
+    props: ['mymeetups', 'meetups']
   }
 </script>
