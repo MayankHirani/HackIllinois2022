@@ -1,1 +1,1 @@
-<button type="button">Click Me!</button>
+<button onclick="functionToExecute()">Click</button>
