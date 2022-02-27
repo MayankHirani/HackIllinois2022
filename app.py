@@ -2,12 +2,12 @@ import os
 from flask import Flask, request
 from flask_cors import CORS
 import json
-#from lib.meetup_cache import MeetupCache
+from lib.meetup_cache import MeetupCache
 
 app = Flask(__name__, static_folder='./dist', static_url_path='/')
 CORS(app)
 
-#meetups = MeetupCache()
+meetups = MeetupCache()
 
 @app.route('/')
 def index():

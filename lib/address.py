@@ -5,3 +5,6 @@ class Address:
     def __init__(self, address, location) -> None:
         self.address = address
         self.location = location
+    
+    def json(self):
+        return { "address" : self.address, "location" : self.location.json() }

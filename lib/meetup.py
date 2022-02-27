@@ -26,3 +26,9 @@ class Meetup:
             return True
         else:
             return False
+
+    def json(self):
+        attendees = []
+        for attendee in self.attendees:
+            attendees.append(attendee.json())
+        return { "id" : self.id, "start" : str(self.start), "creatorid" : self.creatorid, "size" : self.size, "resaurant" : self.restaurant.json(), "attendees" : attendees }
