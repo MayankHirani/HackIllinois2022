@@ -8,19 +8,19 @@ class Meetup:
     def __init__(self, creator, start, size, restaurant) -> None:
         self.id = str(uuid.uuid4())
         self.start = start
-        self.creatorid = creator.id
-        self.size = size
+        self.creatorid = str(creator.id)
+        self.size = int(size)
         self.restaurant = restaurant
         self.attendees = []
         self.attendees.append(creator)
 
     def add_attendee(self, attendee):
         if next(filter(lambda x: x.id == attendee.id, self.attendees), None) == None and len(self.attendees) < self.size:
-            self.attendees.append(id)
+            self.attendees.append(attendee)
     
     def remove_attendee(self, id, cache):
-        if next(filter(lambda x: x.id == id, self.attendees), None) != None:
-            self.attendees.remove(next(filter(lambda x: x.id == id, self.attendees), None))
+        if next(filter(lambda x: x.id == str(id), self.attendees), None) != None:
+            self.attendees.remove(next(filter(lambda x: x.id == str(id), self.attendees), None))
             if len(self.attendees) == 0:
                 cache.meetups.remove(self)
 

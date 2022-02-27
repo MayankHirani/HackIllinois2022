@@ -3,7 +3,7 @@ from .location import Location
 # Params: address (string), location (Location)
 class Address:
     def __init__(self, address, location) -> None:
-        self.address = address
+        self.address = str(address)
         self.location = location
     
     def json(self):

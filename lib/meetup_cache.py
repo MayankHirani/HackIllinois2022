@@ -6,31 +6,13 @@ class MeetupCache:
     def __init__(self) -> None:
         self.meetups = []
 
-    """def sort_meetups(self, user_location):
-        distances = []
-        for event in self.meetups:
-            event_latitude = event.restaurant.address.location.latitude
-            event_longitude = event.restaurant.address.location.longitude
-            distance = get_distance(user_location.latitude, event_latitude, user_location.longitude, event_longitude)
-            distances.append(distance)
-
-        for i in range(1, len(distances)):
-            x = distances[i]
-            y = self.meetups[i]
-            j = i - 1
-            while j >= 0 and x < distances[j]:
-                distances[j+1] = distances[j]
-                j -= 1
-            distances[j+1] = x
-            self.meetups[j + 1] = y"""
-
     def get_meetup(self, id):
-        return next(filter(lambda x: x.id == id, self.meetups), None)
+        return next(filter(lambda x: x.id == str(id), self.meetups), None)
 
     def get_user_meetups(self, id):
         events = []
         for event in self.meetups:
-            if next(filter(lambda x: x.id == id, event.attendees), None) != None:
+            if next(filter(lambda x: x.id == str(id), event.attendees), None) != None:
                 events.append(event)
         return events
 
@@ -50,7 +32,7 @@ class MeetupCache:
 
     def create_meetup(self, restaurant, time, creator, size):
         start = datetime.strptime(time, '%H:%M')
-        self.meetups.append(Meetup(creator, start, size, restaurant))
+        self.meetups.append(Meetup(creator, start, int(size), restaurant))
 
 
 

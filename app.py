@@ -24,7 +24,7 @@ def favicon():
 
 @app.route('/getmymeetups', methods=['GET'])
 def getmymeetups():
-    user_id = request.args.get('id', type=str)
+    user_id = str(request.args.get('id', type=str))
     my_meetups = []
     for meetup in meetups.get_user_meetups(user_id):
         my_meetups.append(meetup.json())
@@ -32,10 +32,10 @@ def getmymeetups():
 
 @app.route('/getmeetups', methods=['GET'])
 def getmeetups():
-    user_id = request.args.get('id', type=str)
-    latitude = request.args.get('lat', type=float)
-    longitude = request.args.get('lon', type=float)
-    distance = request.args.get('distance', type=int)
+    user_id = str(request.args.get('id', type=str))
+    latitude = float(request.args.get('lat', type=float))
+    longitude = float(request.args.get('lon', type=float))
+    distance = int(request.args.get('distance', type=int))
     my_meetups = []
     for meetup in meetups.get_available_meetups(user_id, Location(latitude, longitude), distance):
         my_meetups.append(meetup.json())
@@ -43,9 +43,9 @@ def getmeetups():
 
 @app.route('/getrestaurants', methods=['GET'])
 def getrestaurants():
-    latitude = request.args.get('lat', type=float)
-    longitude = request.args.get('lon', type=float)
-    distance = request.args.get('distance', type=int)
+    latitude = float(request.args.get('lat', type=float))
+    longitude = float(request.args.get('lon', type=float))
+    distance = int(request.args.get('distance', type=int))
     my_restaurants = []
     for restaurant in db.get_restaurants_available(Location(latitude, longitude), distance):
         my_restaurants.append(restaurant.json())
@@ -54,27 +54,27 @@ def getrestaurants():
 @app.route('/createmeetup', methods=['GET'])
 def createmeetup():
     print(request.form)
-    rid = request.args.get('rid', type=str)
+    rid = str(request.args.get('rid', type=str))
     restaurant = db.get_restaurant(rid)
-    time = request.args.get('time', type=str)
-    user_id = request.args.get('id', type=str)
-    emoji = request.args.get('emoji', type=str)
-    size = request.args.get('size', type=int)
+    time = str(request.args.get('time', type=str))
+    user_id = str(request.args.get('id', type=str))
+    emoji = str(request.args.get('emoji', type=str))
+    size = int(request.args.get('size', type=int))
     meetups.create_meetup(restaurant, time, Attendee(user_id, emoji), size)
     return json.dumps({ "status" : "ok" })
 
 @app.route('/joinmeetup', methods=['GET'])
 def joinmeetup():
-    user_id = request.args.get('id', type=str)
-    emoji = request.args.get('emoji', type=str)
-    mid = request.args.get('mid', type=str)
+    user_id = str(request.args.get('id', type=str))
+    emoji = str(request.args.get('emoji', type=str))
+    mid = str(request.args.get('mid', type=str))
     meetups.get_meetup(mid).add_attendee(Attendee(user_id, emoji))
     return json.dumps({ "status" : "ok" })
 
 @app.route('/leavemeetup', methods=['GET'])
 def leavemeetup():
-    user_id = request.args.get('id', type=str)
-    mid = request.args.get('mid', type=str)
+    user_id = str(request.args.get('id', type=str))
+    mid = str(request.args.get('mid', type=str))
     meetups.get_meetup(mid).remove_attendee(user_id, meetups)
     return json.dumps({ "status" : "ok" })
 
