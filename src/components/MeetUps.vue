@@ -163,56 +163,6 @@
   export default {
     name: 'MeetUps',
     data: () => ({
-        mymeetups: [
-   {
-      "id":"3d810ca6-b0ac-4c20-b30c-44621c5d9ca7",
-      "start":"1900-01-01 03:00:00",
-      "creatorid":"101",
-      "size":4,
-      "restaurant":{
-         "id":"4006963788249733",
-         "name":"Applebee?s® Grill & Bar",
-         "address":{
-            "address":"1201 N Dunlap Ave Savoy, IL 61874",
-            "location":{
-               "latitude":40.069637,
-               "longitude":-88.249733
-            }
-         }
-      },
-      "attendees":[
-         {
-            "id":"101",
-            "emoji":"🥰"
-         }
-      ]
-   }
-],
-meetups: [
-   {
-      "id":"3d810ca6-b0ac-4c20-b30c-44621c5d9ca7",
-      "start":"1900-01-01 03:00:00",
-      "creatorid":"101",
-      "size":4,
-      "restaurant":{
-         "id":"4006963788249733",
-         "name":"Applebee?s® Grill & Bar",
-         "address":{
-            "address":"1201 N Dunlap Ave Savoy, IL 61874",
-            "location":{
-               "latitude":40.069637,
-               "longitude":-88.249733
-            }
-         }
-      },
-      "attendees":[
-         {
-            "id":"101",
-            "emoji":"🥰"
-         }
-      ]
-   }
-]
     }),
   
   }

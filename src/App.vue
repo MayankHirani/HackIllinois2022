@@ -13,7 +13,7 @@
       <LoadingScreen v-if="view == 'loading'"></LoadingScreen>
       <CantAccess @setUser="setUser" v-if="view == 'cant'"></CantAccess>
       <MeetUps :mymeetups="mymeetups" :meetups="meetups" v-if="view == 'meet'"></MeetUps>
-      <Settings v-if="view == 'settings'"></Settings>
+      <SettingsPage v-if="view == 'settings'"></SettingsPage>
       <CreateMeetup v-if="view == 'create'"></CreateMeetup>
     </v-main>
   </v-app>
