@@ -7,7 +7,9 @@
         <v-icon>mdi-cog</v-icon>
       </v-btn>
     </v-app-bar>
-
+    <v-btn @click="view = 'create'" fab large bottom right absolute>
+      <v-icon>mti-plus-circle-outline</v-icon>
+    </v-btn>
     <v-main>
       <GoogleLogin @setUser="setUser" v-if="view == 'login'"></GoogleLogin>
       <LoadingScreen v-if="view == 'loading'"></LoadingScreen>
@@ -87,6 +89,28 @@ export default {
         this.meetups = JSON.parse(response.data.meetups)
         console.log(response)
         this.view = "meet"
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
+    joinMeetup(mid, emoji) {
+      this.view = "loading"
+      axios.post('http://localhost:8080/joinmeetup', { "id" : this.user.getBasicProfile().getId(), "emoji" : emoji, "mid" : mid})
+      .then(response => {
+        this.setUser(this.user)
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
+    leaveMeetup(mid) {
+      this.view = "loading"
+      axios.post('http://localhost:8080/leavemeetup', { "id" : this.user.getBasicProfile().getId(), "mid" : mid})
+      .then(response => {
+        this.setUser(this.user)
+        console.log(response)
       })
       .catch(error => {
         console.log(error)
