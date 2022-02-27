@@ -24,7 +24,7 @@ def favicon():
     return app.send_static_file('favicon.ico')
 
 @app.route('/getmymeetups', methods=['GET'])
-def solvePassed():
+def getmymeetups():
     user_id = request.args.get('id', type=str)
     my_meetups = []
     for meetup in meetups.get_user_meetups(user_id):
@@ -32,7 +32,7 @@ def solvePassed():
     return json.dumps(my_meetups)
 
 @app.route('/getmeetups', methods=['GET'])
-def solvePassed():
+def getmeetups():
     user_id = request.args.get('id', type=str)
     latitude = request.args.get('lat', type=float)
     longitude = request.args.get('lon', type=float)
@@ -43,7 +43,7 @@ def solvePassed():
     return json.dumps(my_meetups)
 
 @app.route('/getrestaurants', methods=['GET'])
-def solvePassed():
+def getrestaurants():
     latitude = request.args.get('lat', type=float)
     longitude = request.args.get('lon', type=float)
     distance = request.args.get('distance', type=int)
@@ -53,7 +53,7 @@ def solvePassed():
     return json.dumps(my_restaurants)
 
 @app.route('/createmeetup', methods=['POST'])
-def validate():
+def createmeetup():
     rid = request.form["rid"]
     time = request.form["time"]
     user_id = request.form["id"]
@@ -63,7 +63,7 @@ def validate():
     return json.dumps({ "status" : "ok" })
 
 @app.route('/joinmeetup', methods=['POST'])
-def validate():
+def joinmeetup():
     user_id = request.form["id"]
     emoji = request.form["emoji"]
     mid = request.form["mid"]
@@ -71,7 +71,7 @@ def validate():
     return json.dumps({ "status" : "ok" })
 
 @app.route('/leavemeetup', methods=['POST'])
-def validate():
+def leavemeetup():
     user_id = request.form["id"]
     mid = request.form["mid"]
     meetups.get_meetup(mid).remove_attendee(Attendee(user_id, ''))
@@ -82,4 +82,4 @@ def not_found(e):
     return app.send_static_file('index.html')
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
+    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 8080))

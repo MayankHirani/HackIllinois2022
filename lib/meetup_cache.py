@@ -36,7 +36,7 @@ class MeetupCache:
 
     def get_available_meetups(self, id, user_location, max_distance):
         available_meetups = []
-        current_meetups = self.get_user_meetups(self, id)
+        current_meetups = self.get_user_meetups(id)
         current_times = []
         for event in current_meetups:
             current_times.append(event.start)
