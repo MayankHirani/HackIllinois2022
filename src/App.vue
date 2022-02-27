@@ -12,7 +12,7 @@
       <GoogleLogin @setUser="setUser" v-if="view == 'login'"></GoogleLogin>
       <LoadingScreen v-if="view == 'loading'"></LoadingScreen>
       <CantAccess @setUser="setUser" v-if="view == 'cant'"></CantAccess>
-      <MeetUps :mymeetups="mymeetups" :meetups="meetups" v-if="view == 'meet'"></MeetUps>
+      <MeetUps :user="user" :mymeetups="mymeetups" :meetups="meetups" v-if="view == 'meet'"></MeetUps>
       <SettingsPage @updateDistance="updateDistance" @setUser="setUser" :user="user" :distance="distance" v-if="view == 'settings'"></SettingsPage>
       <CreateMeetup v-if="view == 'create'"></CreateMeetup>
     </v-main>
@@ -65,6 +65,7 @@ export default {
       axios.get('http://localhost:8080/getmymeetups', { params: { "id" : this.user.getBasicProfile().getId() }})
       .then(response => {
         this.mymeetups = response
+        console.log(response)
         this.getLocation()
       })
       .catch(error => {
@@ -73,7 +74,7 @@ export default {
     },
     getLocation() {
       this.$getLocation({
-        enableHighAccuracy: true,
+        enableHighAccuracy: false,
         maximumAge: 300000
       })
       .then(coordinates => {
@@ -84,6 +85,7 @@ export default {
       axios.get('http://localhost:8080/getmeetups', { params: { "id" : this.user.getBasicProfile().getId(), "lat" : lat, "lon" : lon, "distance" : this.distance }})
       .then(response => {
         this.meetups = response
+        console.log(response)
         this.view = "meet"
       })
       .catch(error => {
