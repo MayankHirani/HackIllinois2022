@@ -1,5 +1,5 @@
 from .meetup import Meetup
-import math
+from math import radians, cos, sin, asin, sqrt, pi
 
 class MeetupCache:
     def __init__(self) -> None:
@@ -20,14 +20,14 @@ class MeetupCache:
 
     def get_available_meetups(self, id, user_location, max_distance):
         available_meetups = []
-        current_meetups = get_user_meetups(self, id)
+        current_meetups = self.get_user_meetups(self, id)
         current_times = []
         for event in current_meetups:
             current_times.append(event.start)
         for event in self.meetups:
             event_latitude = event.restaurant.adress.location.latitude
             event_longitude = event.restaurant.adress.location.longitude
-            distance = get_distance(user_location.latitude, event_latitude, user_location.longitude, event_longitude)
+            distance = self.get_distance(user_location.latitude, event_latitude, user_location.longitude, event_longitude)
             if event not in current_meetups and event.time not in current_times and distance <= max_distance:
                 available_meetups.append(event)
 
