@@ -1,4 +1,5 @@
-from .address import Location
+from .location import Location
+from .address import Address
 # Data class for restaurant
 # Params: id (string), name (string), location (Location)
 class Restaurant:

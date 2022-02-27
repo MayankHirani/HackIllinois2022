@@ -1,4 +1,6 @@
 import uuid
+from .location import Location
+from .address import Address
 from .attendee import Attendee
 from .restaurant import Restaurant
 
@@ -15,14 +17,17 @@ class Meetup:
         self.attendees.append(creator)
 
     def add_attendee(self, attendee):
-        if next(filter(lambda x: x.id == attendee.id, self.attendees), None) == None and len(self.attendees) < self.size:
+        for att in self.attendees:
+            if (att.id == attendee.id): return
+        if len(self.attendees) < self.size:
             self.attendees.append(attendee)
     
     def remove_attendee(self, id, cache):
-        if next(filter(lambda x: x.id == str(id), self.attendees), None) != None:
-            self.attendees.remove(next(filter(lambda x: x.id == str(id), self.attendees), None))
-            if len(self.attendees) == 0:
-                cache.meetups.remove(self)
+        for attendee in self.attendees:
+            if (attendee.id == str(id)):
+                self.attendees.remove(attendee)
+        if len(self.attendees) == 0:
+            cache.meetups.remove(self)
 
     def json(self):
         attendees = []

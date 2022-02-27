@@ -1,5 +1,8 @@
 from .meetup import Meetup
-from .location import get_distance
+from .location import Location, get_distance
+from .address import Address
+from .attendee import Attendee
+from .restaurant import Restaurant
 from datetime import datetime
 
 class MeetupCache:
@@ -7,24 +10,27 @@ class MeetupCache:
         self.meetups = []
 
     def get_meetup(self, id):
-        return next(filter(lambda x: x.id == str(id), self.meetups), None)
+        meet = None
+        for meetup in self.meetups:
+            if (meetup.id == str(id)): meet = meetup
+        return meet
 
     def get_user_meetups(self, id):
-        events = []
-        for event in self.meetups:
-            if next(filter(lambda x: x.id == str(id), event.attendees), None) != None:
-                events.append(event)
-        return events
+        meetups = []
+        for meetup in self.meetups:
+            for attendee in meetup.attendees:
+                if (attendee.id == str(id)): meetups.append(meetup)
+        return meetups
 
     def get_available_meetups(self, id, user_location, max_distance):
         available_meetups = []
-        current_meetups = self.get_user_meetups(id)
+        current_meetups = self.get_user_meetups(str(id))
         current_times = []
         for event in current_meetups:
             current_times.append(event.start)
         for event in self.meetups:
-            event_latitude = event.restaurant.address.location.latitude
-            event_longitude = event.restaurant.address.location.longitude
+            event_latitude = float(event.restaurant.address.location.latitude)
+            event_longitude = float(event.restaurant.address.location.longitude)
             distance = get_distance(user_location.latitude, event_latitude, user_location.longitude, event_longitude)
             if event not in current_meetups and event.start not in current_times and distance <= max_distance:
                 available_meetups.append(event)
