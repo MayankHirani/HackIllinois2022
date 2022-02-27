@@ -7,16 +7,16 @@
         <v-icon>mdi-cog</v-icon>
       </v-btn>
     </v-app-bar>
-    <v-btn @click="view = 'create'" fab large bottom right absolute>
+    <v-btn @click="openCreate" fab large bottom right absolute>
       <v-icon>mti-plus-circle-outline</v-icon>
     </v-btn>
     <v-main>
       <GoogleLogin @setUser="setUser" v-if="view == 'login'"></GoogleLogin>
       <LoadingScreen v-if="view == 'loading'"></LoadingScreen>
       <CantAccess @setUser="setUser" v-if="view == 'cant'"></CantAccess>
-      <MeetUps :user="user" :mymeetups="mymeetups" :meetups="meetups" v-if="view == 'meet'"></MeetUps>
+      <MeetUps @joinMeetup="joinMeetup" @leaveMeetup="leaveMeetup" :user="user" :mymeetups="mymeetups" :meetups="meetups" v-if="view == 'meet'"></MeetUps>
       <SettingsPage @updateDistance="updateDistance" @setUser="setUser" :user="user" :distance="distance" v-if="view == 'settings'"></SettingsPage>
-      <CreateMeetup v-if="view == 'create'"></CreateMeetup>
+      <CreateMeetup :restaurants="restaurants" @createMeetup="createMeetup" v-if="view == 'create'"></CreateMeetup>
     </v-main>
   </v-app>
 </template>
@@ -46,7 +46,8 @@ export default {
     user: null,
     mymeetups: [],
     meetups: [],
-    distance: 15
+    distance: 15,
+    restaurants: []
   }),
   methods: {
     setUser(googleUser) {
@@ -66,7 +67,8 @@ export default {
     loadMyMeetups() {
       axios.get('http://localhost:8080/getmymeetups', { params: { "id" : this.user.getBasicProfile().getId() }})
       .then(response => {
-        this.meetups = JSON.parse(response.data.meetups)
+        this.mymeetups = JSON.parse(response.data.meetups)
+        console.log(this.meetups)
         console.log(response)
         this.getLocation()
       })
@@ -80,7 +82,8 @@ export default {
         maximumAge: 300000
       })
       .then(coordinates => {
-        this.loadMeetups(coordinates.latitude, coordinates.longitude)
+        console.log(coordinates)
+        this.loadMeetups(coordinates.lat, coordinates.lng)
       })
     },
     loadMeetups(lat, lon) {
@@ -96,7 +99,7 @@ export default {
     },
     joinMeetup(mid, emoji) {
       this.view = "loading"
-      axios.post('http://localhost:8080/joinmeetup', { "id" : this.user.getBasicProfile().getId(), "emoji" : emoji, "mid" : mid})
+      axios.get('http://localhost:8080/joinmeetup', { "params" : { "id" : this.user.getBasicProfile().getId(), "emoji" : emoji, "mid" : mid}})
       .then(response => {
         this.setUser(this.user)
         console.log(response)
@@ -107,7 +110,7 @@ export default {
     },
     leaveMeetup(mid) {
       this.view = "loading"
-      axios.post('http://localhost:8080/leavemeetup', { "id" : this.user.getBasicProfile().getId(), "mid" : mid})
+      axios.get('http://localhost:8080/leavemeetup', { "params" : { "id" : this.user.getBasicProfile().getId(), "mid" : mid } })
       .then(response => {
         this.setUser(this.user)
         console.log(response)
@@ -119,6 +122,40 @@ export default {
     updateDistance(dist) {
       this.distance = dist
     },
+    createMeetup(rid, time, emoji, size) {
+      this.view = "loading"
+      console.log(rid)
+      console.log(time)
+      console.log(emoji)
+      console.log(size)
+      console.log(this.user.getBasicProfile().getId())
+      axios.get('http://localhost:8080/createmeetup', { "params" : { "rid" : rid.toString(), "time" : time, "id" : this.user.getBasicProfile().getId(), "emoji" : emoji, "size" : size } })
+      .then(response => {
+        this.setUser(this.user)
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
+    openCreate() {
+      this.view = "loading"
+      this.$getLocation({
+        enableHighAccuracy: false,
+        maximumAge: 300000
+      })
+      .then(coordinates => {
+        axios.get('http://localhost:8080/getrestaurants', { params: { "id" : this.user.getBasicProfile().getId(), "lat" : coordinates.lat, "lon" : coordinates.lng, "distance" : this.distance }})
+        .then(response => {
+          this.restaurants = JSON.parse(response.data.restaurants)
+          this.view = "create"
+          console.log(this.restaurants)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      })
+    }
   }
 };
 </script>

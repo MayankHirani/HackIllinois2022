@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <div v-if="mymeetups.length">
+        <div v-if="mymeetups.length != 0">
             <v-row class="pt-3">
                 <h1>My Meetups</h1>
             </v-row>

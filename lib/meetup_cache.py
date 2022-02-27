@@ -30,7 +30,7 @@ class MeetupCache:
     def get_user_meetups(self, id):
         events = []
         for event in self.meetups:
-            if id in event.attendees:
+            if next(filter(lambda x: x.id == id, event.attendees), None) != None:
                 events.append(event)
         return events
 
@@ -44,7 +44,7 @@ class MeetupCache:
             event_latitude = event.restaurant.address.location.latitude
             event_longitude = event.restaurant.address.location.longitude
             distance = get_distance(user_location.latitude, event_latitude, user_location.longitude, event_longitude)
-            if event not in current_meetups and event.time not in current_times and distance <= max_distance:
+            if event not in current_meetups and event.start not in current_times and distance <= max_distance:
                 available_meetups.append(event)
         return available_meetups
 

@@ -52,29 +52,31 @@ def getrestaurants():
         my_restaurants.append(restaurant.json())
     return { "restaurants" : json.dumps(my_restaurants) }
 
-@app.route('/createmeetup', methods=['POST'])
+@app.route('/createmeetup', methods=['GET'])
 def createmeetup():
-    rid = request.form["rid"]
-    time = request.form["time"]
-    user_id = request.form["id"]
-    emoji = request.form["emoji"]
-    size = request.form["size"]
-    meetups.create_meetup(rid, time, Attendee(user_id, emoji), size)
+    print(request.form)
+    rid = request.args.get('rid', type=str)
+    restaurant = db.get_restaurant(rid)
+    time = request.args.get('time', type=str)
+    user_id = request.args.get('id', type=str)
+    emoji = request.args.get('emoji', type=str)
+    size = request.args.get('size', type=int)
+    meetups.create_meetup(restaurant, time, Attendee(user_id, emoji), size)
     return json.dumps({ "status" : "ok" })
 
-@app.route('/joinmeetup', methods=['POST'])
+@app.route('/joinmeetup', methods=['GET'])
 def joinmeetup():
-    user_id = request.form["id"]
-    emoji = request.form["emoji"]
-    mid = request.form["mid"]
+    user_id = request.args.get('id', type=str)
+    emoji = request.args.get('emoji', type=str)
+    mid = request.args.get('mid', type=str)
     meetups.get_meetup(mid).add_attendee(Attendee(user_id, emoji))
     return json.dumps({ "status" : "ok" })
 
-@app.route('/leavemeetup', methods=['POST'])
+@app.route('/leavemeetup', methods=['GET'])
 def leavemeetup():
-    user_id = request.form["id"]
-    mid = request.form["mid"]
-    meetups.get_meetup(mid).remove_attendee(Attendee(user_id, ''))
+    user_id = request.args.get('id', type=str)
+    mid = request.args.get('mid', type=str)
+    meetups.get_meetup(mid).remove_attendee(user_id, meetups)
     return json.dumps({ "status" : "ok" })
 
 @app.errorhandler(404)
