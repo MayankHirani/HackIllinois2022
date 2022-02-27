@@ -1,60 +1,34 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
+    <v-app-bar app color="primary" dark>
+      <v-toolbar-title>FoodBuddies</v-toolbar-title>
       <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+      <v-btn icon v-if="view == 'list'" @click="view = 'settings'">
+        <v-icon>mdi-cog</v-icon>
       </v-btn>
     </v-app-bar>
 
     <v-main>
-      <HelloWorld/>
+      <LoadingScreen v-if="view == 'loading'"></LoadingScreen>
+      <HelloWorld v-if="view == 'hello'"></HelloWorld>
     </v-main>
   </v-app>
 </template>
 
 <script>
+import LoadingScreen from './components/LoadingScreen';
 import HelloWorld from './components/HelloWorld';
 
 export default {
   name: 'App',
 
   components: {
+    LoadingScreen,
     HelloWorld,
   },
 
   data: () => ({
-    //
-  }),
+    view: "loading"
+  })
 };
 </script>
