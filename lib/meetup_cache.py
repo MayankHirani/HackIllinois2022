@@ -6,7 +6,7 @@ class MeetupCache:
     def __init__(self) -> None:
         self.meetups = []
 
-    def sort_meetups(self, user_location):
+    """def sort_meetups(self, user_location):
         distances = []
         for event in self.meetups:
             event_latitude = event.restaurant.address.location.latitude
@@ -22,9 +22,7 @@ class MeetupCache:
                 distances[j+1] = distances[j]
                 j -= 1
             distances[j+1] = x
-            self.meetups[j + 1] = y
-
-            
+            self.meetups[j + 1] = y"""
 
     def get_meetup(self, id):
         return next(filter(lambda x: x.id == id, self.meetups), None)
