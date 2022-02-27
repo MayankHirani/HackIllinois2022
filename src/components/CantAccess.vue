@@ -17,7 +17,7 @@
 
 <script>
   export default {
-    name: 'LoadingScreen',
+    name: 'CantAccess',
     data: () => ({}),
     methods: {
         logout() {

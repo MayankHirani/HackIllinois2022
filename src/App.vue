@@ -12,7 +12,7 @@
       <GoogleLogin @setUser="setUser" v-if="view == 'login'"></GoogleLogin>
       <LoadingScreen v-if="view == 'loading'"></LoadingScreen>
       <CantAccess @setUser="setUser" v-if="view == 'cant'"></CantAccess>
-      <MeetUps v-if="view == 'meet'"></MeetUps>
+      <MeetUps :mymeetups="mymeetups" :meetups="meetups" v-if="view == 'meet'"></MeetUps>
       <Settings v-if="view == 'settings'"></Settings>
       <CreateMeetup v-if="view == 'create'"></CreateMeetup>
     </v-main>
@@ -24,7 +24,7 @@ import GoogleLogin from './components/GoogleLogin';
 import LoadingScreen from './components/LoadingScreen';
 import CantAccess from './components/CantAccess';
 import MeetUps from './components/MeetUps';
-import Settings from './components/Settings';
+import SettingsPage from './components/SettingsPage';
 import CreateMeetup from './components/CreateMeetup';
 import axios from 'axios';
 
@@ -36,7 +36,7 @@ export default {
     LoadingScreen,
     CantAccess,
     MeetUps,
-    Settings,
+    SettingsPage,
     CreateMeetup
   },
   data: () => ({

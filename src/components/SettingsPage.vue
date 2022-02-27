@@ -5,7 +5,7 @@
 
 <script>
   export default {
-    name: 'HelloWorld',
+    name: 'SettingsPage',
 
     data: () => ({
         //
