@@ -2,7 +2,7 @@ import json
 
 from lib.restaurant import Restaurant
 from .address import Address
-from .location import Location
+from .location import Location, get_distance
 # Database controller
 
 # File string
