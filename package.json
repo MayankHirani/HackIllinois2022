@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve --config webpack.config.js",
     "build": "vue-cli-service build --config webpack.config.js",
     "lint": "vue-cli-service lint --config webpack.config.js",
-    "start": "vue-cli-service serve --config webpack.config.js"
+    "start": "vue-cli-service serve --config webpack.config.js",
+    "postinstall" : "npm run build"
   },
   "dependencies": {
     "axios": "^0.26.0",
