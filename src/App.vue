@@ -7,8 +7,8 @@
         <v-icon>mdi-cog</v-icon>
       </v-btn>
     </v-app-bar>
-    <v-btn @click="openCreate" fab large bottom right absolute>
-      <v-icon>mti-plus-circle-outline</v-icon>
+    <v-btn @click="openCreate" fab large bottom right absolute class="pt-10 pb-10 pl-10 pr-10">
+      <v-icon color="black>mti-plus-circle-outline</v-icon>
     </v-btn>
     <v-main>
       <GoogleLogin @setUser="setUser" v-if="view == 'login'"></GoogleLogin>
