@@ -17,7 +17,7 @@
     name: 'GoogleLogin',
     data: () => ({
       googleSignInParams: {
-        client_id: '378762485257-kpdup215b67sgg54v37f2267o9d0ejig.apps.googleusercontent.com'
+        client_id: '982693143054-out9354r1q3qk1oje82nt6r0tm1ca41a.apps.googleusercontent.com'
       }
     }),
     methods: {
