@@ -2,7 +2,7 @@ import json
 
 from lib.restaurant import Restaurant
 from .address import Address
-from .location import Location
+from .location import Location, get_distance
 # Database controller
 
 # File string
@@ -19,3 +19,13 @@ class RestaurantDatabase():
 
     def get_restaurant(self, id):
         return next(filter(lambda x: x.id == id, self.restaurants), None)
+
+    def get_restaurants_available(self, user_location, distance):
+        available_restaurants = []
+        for restaurant in self.restaurants:
+            restaurant_latitude = restaurant.address.location.latitude
+            restaurant_longitude = restaurant.address.location.longitude
+            restaurant_distance = get_distance(user_location.latitude, restaurant_latitude, user_location.longitude, restaurant_longitude)
+            if restaurant_distance <= distance:
+                available_restaurants.append(restaurant)
+        return available_restaurants

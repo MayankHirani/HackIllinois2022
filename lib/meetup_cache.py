@@ -1,13 +1,28 @@
 from .meetup import Meetup
-from math import radians, cos, sin, asin, sqrt, pi
-from datetime import date
+from .location import get_distance
+from datetime import datetime
 
 class MeetupCache:
     def __init__(self) -> None:
         self.meetups = []
-    
-    # TODO: function to get participating meetups by user id -> array of meetup ids
-    # TODO: function to get non-participating meetups by user id, distance, conflicts -> approriate array of meetup ids
+
+    """def sort_meetups(self, user_location):
+        distances = []
+        for event in self.meetups:
+            event_latitude = event.restaurant.address.location.latitude
+            event_longitude = event.restaurant.address.location.longitude
+            distance = get_distance(user_location.latitude, event_latitude, user_location.longitude, event_longitude)
+            distances.append(distance)
+
+        for i in range(1, len(distances)):
+            x = distances[i]
+            y = self.meetups[i]
+            j = i - 1
+            while j >= 0 and x < distances[j]:
+                distances[j+1] = distances[j]
+                j -= 1
+            distances[j+1] = x
+            self.meetups[j + 1] = y"""
 
     def get_meetup(self, id):
         return next(filter(lambda x: x.id == id, self.meetups), None)
@@ -26,28 +41,15 @@ class MeetupCache:
         for event in current_meetups:
             current_times.append(event.start)
         for event in self.meetups:
-            event_latitude = event.restaurant.adress.location.latitude
-            event_longitude = event.restaurant.adress.location.longitude
-            distance = self.get_distance(user_location.latitude, event_latitude, user_location.longitude, event_longitude)
+            event_latitude = event.restaurant.address.location.latitude
+            event_longitude = event.restaurant.address.location.longitude
+            distance = get_distance(user_location.latitude, event_latitude, user_location.longitude, event_longitude)
             if event not in current_meetups and event.time not in current_times and distance <= max_distance:
                 available_meetups.append(event)
-
-    #for get_available_meetups
-    def distance(lat1, lat2, lon1, lon2):
-     
-        lon1 *= pi/180
-        lon2 *= pi/180
-        lat1 *= pi/180
-        lat2 *= pi/180
-
-        dlon = lon2 - lon1
-        dlat = lat2 - lat1
-        a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
-        c = 2 * asin(sqrt(a))
-        return(c * 3956)
+        return available_meetups
 
     def create_meetup(self, restaurant, time, creator, size):
-        start = datetime.strptime(time, '%I:%M%p')
+        start = datetime.strptime(time, '%H:%M')
         self.meetups.append(Meetup(creator, start, size, restaurant))
 
 

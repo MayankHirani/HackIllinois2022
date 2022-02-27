@@ -18,7 +18,6 @@
 
 <script>
 import LoadingScreen from './components/LoadingScreen';
-import HelloWorld from './components/HelloWorld';
 import MeetUps from './components/MeetUps';
 
 export default {
@@ -26,7 +25,6 @@ export default {
 
   components: {
     LoadingScreen,
-    HelloWorld,
     MeetUps
   },
 

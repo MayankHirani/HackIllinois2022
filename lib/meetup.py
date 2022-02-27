@@ -14,15 +14,18 @@ class Meetup:
         self.attendees = []
         self.attendees.append(creator)
 
-    def add_attendee(self, id):
-        if id not in self.attendees and len(self.attendees) < self.size:
+    def add_attendee(self, attendee):
+        if next(filter(lambda x: x.id == attendee.id, self.attendees), None) == None and len(self.attendees) < self.size:
             self.attendees.append(id)
     
     def remove_attendee(self, id, cache):
-        if id in self.attendees:
-            self.attendees.remove(id)
+        if next(filter(lambda x: x.id == id, self.attendees), None) != None:
+            self.attendees.remove(next(filter(lambda x: x.id == id, self.attendees), None))
             if len(self.attendees) == 0:
                 cache.meetups.remove(self)
-            return True
-        else:
-            return False
+
+    def json(self):
+        attendees = []
+        for attendee in self.attendees:
+            attendees.append(attendee.json())
+        return { "id" : self.id, "start" : str(self.start), "creatorid" : self.creatorid, "size" : self.size, "restaurant" : self.restaurant.json(), "attendees" : attendees }

@@ -1,1 +1,0 @@
-<button onclick="functionToExecute()">Click</button>

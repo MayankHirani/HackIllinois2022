@@ -6,3 +6,6 @@ class Restaurant:
         self.id = id
         self.name = name
         self.address = address
+    
+    def json(self):
+        return { "id" : self.id, "name" : self.name, "address" : self.address.json() }
